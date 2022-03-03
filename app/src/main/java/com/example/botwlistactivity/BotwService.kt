@@ -6,5 +6,5 @@ import retrofit2.http.Query
 
 interface BotwService {
     @GET("api/v2")
-    fun getItem(@Query("lastdays") lastdays: Int): Call<List<botwItem>>
+    fun getItem(@Query("actualItem") actualItem: String): Call<List<botwItem>>
 }

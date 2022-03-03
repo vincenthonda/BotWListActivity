@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import org.w3c.dom.Text
 
 class botwAdapter (var dataSet: List<botwItem>) :
     RecyclerView.Adapter<botwAdapter.ViewHolder>() {
@@ -18,16 +19,18 @@ class botwAdapter (var dataSet: List<botwItem>) :
      * (custom ViewHolder).
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val botwDrops: TextView
         val botwImage: ImageView
-        val heroDesc : TextView
+        val botwID: TextView
+        val botwName: TextView
+        val botwCat: TextView
         val layout : ConstraintLayout
 
         init {
-            botwDrops = view.findViewById(R.id.textView_heroItem_ranking)
-            botwImage = view.findViewById(R.id.textView_heroItem_name)
-            heroDesc = view.findViewById(R.id.textView_heroItem_desc)
-            layout = view.findViewById(R.id.layout_heroItem)
+            botwImage = view.findViewById(R.id.imageView_item_image)
+            botwID = view.findViewById(R.id.textView_item_id)
+            botwName = view.findViewById(R.id.textView_item_name)
+            botwCat = view.findViewById(R.id.textView_item_category)
+            layout = view.findViewById(R.id.layout_item)
         }
     }
 
@@ -35,7 +38,7 @@ class botwAdapter (var dataSet: List<botwItem>) :
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.item_hero, viewGroup, false)
+            .inflate(R.layout.activity_botw_item, viewGroup, false)
 
         return ViewHolder(view)
     }
@@ -44,17 +47,17 @@ class botwAdapter (var dataSet: List<botwItem>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        val hero = dataSet[position]
-        viewHolder.heroRanking.text = hero.ranking.toString()
-        viewHolder.heroName.text = hero.name
-        viewHolder.heroDesc.text = hero.description
+        val botw = dataSet[position]
+        viewHolder.botwID.text = botw.id.toString()
+        viewHolder.botwName.text = botw.name
+        viewHolder.botwCat.text = botw.category
         viewHolder.layout.setOnClickListener {
-            Toast.makeText(it.context, "Hi, you clicked on ${hero.name}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(it.context, "Hi, you clicked on ${botw.name}", Toast.LENGTH_SHORT).show()
             val context = viewHolder.layout.context
-            val heroDetailIntent = Intent(context, HeroesDetailActivity::class.java).apply{
-                putExtra(HeroesDetailActivity.EXTRA_HERO, hero)
+            val heroDetailIntent = Intent(context, botwDetailActivity::class.java).apply{
+                putExtra(botwDetailActivity.EXTRA_BOTW, botw)
             }
-            context.startActivity(heroDetailIntent)
+            context.startActivity(botwDetailIntent)
         }
     }
 
